@@ -1,75 +1,86 @@
-📄 PDF Semantic Search API
-A FastAPI app that extracts text from a PDF, chunks it, creates semantic embeddings using SentenceTransformers, indexes them with FAISS, and provides a query endpoint for semantic search over the document!
+📄 PDF Semantic Search API using Sentence Transformers, FAISS & FastAPI
+This project creates a REST API that allows users to ask questions about the content of a PDF file. It uses:
+
+Sentence Transformers for generating text embeddings,
+
+FAISS for efficient semantic search,
+
+FastAPI for the web API,
+
+Ngrok for exposing the local API to the internet (useful for testing in environments like Google Colab),
+
+PyMuPDF (fitz) for reading PDFs.
 
 🚀 Features
-Extracts text from PDF using PyMuPDF (fitz)
+Extracts text from a PDF document
 
-Splits long text into manageable chunks
+Splits the text into manageable chunks
 
-Embeds chunks with sentence-transformers/all-MiniLM-L6-v2
+Embeds the chunks using sentence-transformers
 
-Builds a FAISS similarity search index
+Indexes them with FAISS for similarity search
 
-Exposes a FastAPI endpoint for semantic question answering
+Hosts a FastAPI endpoint to accept natural language queries
 
-Publicly accessible via ngrok tunnel
+Returns top relevant chunks with similarity scores
 
-⚙️ Setup & Run
-1. Install dependencies:
+🧱 Tech Stack
+sentence-transformers (for encoding text)
+
+faiss-cpu (for similarity search)
+
+PyMuPDF (to extract text from PDFs)
+
+FastAPI (to create the API)
+
+uvicorn (ASGI server)
+
+ngrok (for external access to your local server)
+
+sklearn.preprocessing.normalize (for normalized embeddings)
+
+📦 Installation
 bash
 Copy
 Edit
-pip install sentence-transformers faiss-cpu pymupdf scikit-learn fastapi pydantic pyngrok uvicorn nest_asyncio
-2. Place your PDF
-Put your PDF at the path:
+pip install sentence-transformers faiss-cpu pymupdf fastapi pyngrok uvicorn nest_asyncio scikit-learn
 
-css
+🔍 API Endpoint
+POST /query/
+Description: Accepts a question and returns the most relevant chunks from the PDF.
+
+Request:
+
+json
 Copy
 Edit
-/content/article.pdf
-3. Run the script
-bash
-Copy
-Edit
-python rag_api.py
-4. Use the API
-After running, a public URL will be printed in the terminal. You can query it like this:
-
-http
-Copy
-Edit
-POST {public_url}/query/
-Content-Type: application/json
-
 {
-  "question": "Your query here"
+  "question": "What is the main argument of the article?"
 }
-🧩 How it Works
-Extracts all text from the PDF file
+Response:
 
-Splits text into chunks (max 1500 characters) at sentence or newline boundaries
+json
+Copy
+Edit
+{
+  "question": "What is the main argument of the article?",
+  "results": [
+    {
+      "text": "First matching text chunk...",
+      "score": 0.84
+    },
+    {
+      "text": "Second matching text chunk...",
+      "score": 0.79
+    }
+  ]
+}
+📌 Notes
+The script uses nest_asyncio to allow asynchronous FastAPI + ngrok in environments like Jupyter or Colab.
 
-Encodes each chunk using MiniLM embeddings
+The PDF is split into chunks of ~1500 characters to maintain context while embedding.
 
-Normalizes and indexes embeddings with FAISS for fast similarity search
+You can change the k=2 value in the index.search() call to retrieve more or fewer results.
 
-Runs a FastAPI server to accept queries
-
-Returns top 2 most relevant chunks with similarity scores
-
-Uses ngrok to expose the local API to the internet
-
-🔑 Notes
-Replace the ngrok auth token with your own
-
-Change the PDF path to your actual document location
-
-You can adjust:
-
-max_chunk_size in chunk_text()
-
-k (number of results returned) in index.search()
-
-🧑‍💻 Author
-Nilsa Dehghan
-🌐 GitHub
+📄 License
+MIT License. Use freely with attribution.
