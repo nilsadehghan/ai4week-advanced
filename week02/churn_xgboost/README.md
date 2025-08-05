@@ -76,7 +76,7 @@ Run the script:
 bash
 Copy
 Edit
-python churn_prediction.py
+python main.py
 View plots for feature distributions and ROC curve.
 
 Check console output for model performance metrics.
