@@ -8,7 +8,7 @@ Interactive prediction app using Streamlit
 
 The project walks through the entire machine learning pipeline from data preprocessing and feature engineering to model training, evaluation, and deployment via a user-friendly web interface.
 
-🛠️ 1. Model Training and Evaluation (churn_model_training.py)
+🛠️ 1. Model Training and Evaluation
 ✨ Key Features
 Performs feature engineering:
 
@@ -43,7 +43,7 @@ Count plots by contract type and churn
 
 ROC Curve
 
-🌐 2. Streamlit App (churn_prediction_app.py)
+🌐 2. Streamlit App 
 🧠 Functionality
 An interactive web app to:
 
